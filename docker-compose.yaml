@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mysql_urgencias:
+    image: mysql:8.0
+    container_name: mysql_urgencias
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: urgencias_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  sqlserver_farmacia:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_farmacia
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Your_Password123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+
+  postgres_finanzas:
+    image: postgres:15
+    container_name: postgres_finanzas
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: finanzas_auditoria_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mysql_data:
+  mssql_data:
+  postgres_data:
